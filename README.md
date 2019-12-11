@@ -7,7 +7,7 @@ BUILD INSTRUCTIONS
 
 from the project's root directory,
 
-    -mkdir build
-    -cd build
-    -cmake ../
-    -cmake --build .
+    mkdir build
+    cd build
+    cmake ../
+    cmake --build .
