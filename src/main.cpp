@@ -36,51 +36,40 @@ std::vector<std::shared_ptr<Point>> generateRandomPoints(int min, int max, int s
 
 int main() {
 
-    
-    // auto x = coords(3, 1);
-    auto r = std::make_shared<Point>(coords(1, 1));
-    auto a = std::make_shared<Point>(coords(3, 1));
-    auto u = std::make_shared<Point>(coords(7.3, 1.25));
-    auto p = std::make_shared<Point>(coords(7.4, 1.25));
-    auto b = std::make_shared<Point>(coords(7.6, 1.25));
-    auto e = std::make_shared<Point>(coords(3, 2));
-    auto c = std::make_shared<Point>(coords(12, 1));
-    auto d = std::make_shared<Point>(coords(8, 1));
-
-    // auto points = std::vector<std::shared_ptr<Point>>(4);
-    // points.push(a);
-    std::vector<std::shared_ptr<Point>> points = {a, b, c, d, e, p, r, u};
-
-    int max = 100;
+    int max = 1000;
     int min = -max;
-    int size = 5000;
+    int size = 10000;
 
+    std::cout << "creating points...\n" << std::endl;
     auto randPoints = generateRandomPoints(min, max, size);
-    // points.push_back(a);
-    // points.push_back(b);
-    // points.push_back(c);
-    // points.push_back(d);
-    // auto grid = std::make_unique<Grid>(points);
+
+
+    std::cout << "Finding the closest pair out of " << size << " points..." << std::endl;
     std::sort(randPoints.begin(), randPoints.end(), sortPoints);
 
     auto grid = std::make_unique<Grid>(randPoints);
 
+    std::cout << "With divide and conquer solution" << std::endl;
     auto timeBegin = Clock::now();
     auto z = grid->findClosestPair();
     auto timeEnd = Clock::now();
 
     auto divAndConquerTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
 
+    std::cout << "Divide and Conquer Time:\n" << divAndConquerTime << " milliseconds\n" << std::endl;
+
     auto gridBruteForce = std::make_unique<Grid>(randPoints);
 
+    std::cout << "Finding the closest pair out of " << size << " points..." << std::endl;
+    std::cout << "With brute force (for reference)" << std::endl;
     timeBegin = Clock::now();
     auto y = gridBruteForce->slowFindClosestPair();
     timeEnd = Clock::now();
 
-    auto bruteForceTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
+    auto bruteForceTime = std::chrono::duration_cast<std::chrono::seconds>(timeEnd - timeBegin).count();
 
-    std::cout << "Divide and Conquer Time:\n" << divAndConquerTime << std::endl;
-    std::cout << "Brute Force Time:\n" << bruteForceTime << std::endl;
+
+    std::cout << "Brute Force Time:\n" << bruteForceTime << " seconds...\n" << std::endl;
     // std::cout << "x: "<< a->position.first << std::endl;
     // std::cout << "y: "<< a->position.second << std:: endl;
 }
