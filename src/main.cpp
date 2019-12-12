@@ -36,9 +36,9 @@ std::vector<std::shared_ptr<Point>> generateRandomPoints(int min, int max, int s
 
 int main() {
 
-    int max = 1000;
+    int max = 150;
     int min = -max;
-    int size = 10000;
+    int size = 1000;
 
     std::cout << "creating points...\n" << std::endl;
     auto randPoints = generateRandomPoints(min, max, size);
