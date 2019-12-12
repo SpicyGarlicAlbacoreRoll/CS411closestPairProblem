@@ -8,7 +8,7 @@ int main() {
 
     // auto x = coords(3, 1);
     auto a = std::make_shared<Point>(coords(3, 1));
-    auto b = std::make_shared<Point>(coords(6, 1));
+    auto b = std::make_shared<Point>(coords(7, 1.5));
     auto e = std::make_shared<Point>(coords(3, 2));
     auto c = std::make_shared<Point>(coords(12, 1));
     auto d = std::make_shared<Point>(coords(8, 1));

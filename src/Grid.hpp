@@ -12,7 +12,7 @@ class Grid {
 
     std::vector<std::shared_ptr<Point>> points;
     size_t gridSize;
-    Point findClosestPair();
+    std::pair<std::shared_ptr<Point>,std::shared_ptr<Point>> findClosestPair();
 
     private:
         std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>> bruteForceFindClosestPair(std::vector<std::shared_ptr<Point>> coords);
