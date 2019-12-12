@@ -7,6 +7,14 @@
 using Clock=std::chrono::high_resolution_clock;
 using coords = std::pair<double, double>;
 
+struct
+{
+    bool operator()(const std::shared_ptr<Point> &a, const std::shared_ptr<Point> &b)
+    {
+        return a->position.first < b->position.first;
+    }
+} sortPoints;
+
 std::vector<std::shared_ptr<Point>> generateRandomPoints(int min, int max, int size) {
     // std::default_random_engine generator;
     std::random_device rd;
@@ -45,7 +53,7 @@ int main() {
 
     int max = 100;
     int min = -max;
-    int size = 200;
+    int size = 5000;
 
     auto randPoints = generateRandomPoints(min, max, size);
     // points.push_back(a);
@@ -53,13 +61,15 @@ int main() {
     // points.push_back(c);
     // points.push_back(d);
     // auto grid = std::make_unique<Grid>(points);
+    std::sort(randPoints.begin(), randPoints.end(), sortPoints);
+
     auto grid = std::make_unique<Grid>(randPoints);
 
     auto timeBegin = Clock::now();
     auto z = grid->findClosestPair();
     auto timeEnd = Clock::now();
 
-    auto divAndConquerTime = std::chrono::duration_cast<std::chrono::nanoseconds>(timeEnd - timeBegin).count();
+    auto divAndConquerTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
 
     auto gridBruteForce = std::make_unique<Grid>(randPoints);
 
@@ -67,7 +77,7 @@ int main() {
     auto y = gridBruteForce->slowFindClosestPair();
     timeEnd = Clock::now();
 
-    auto bruteForceTime = std::chrono::duration_cast<std::chrono::nanoseconds>(timeEnd - timeBegin).count();
+    auto bruteForceTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
 
     std::cout << "Divide and Conquer Time:\n" << divAndConquerTime << std::endl;
     std::cout << "Brute Force Time:\n" << bruteForceTime << std::endl;
