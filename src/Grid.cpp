@@ -26,24 +26,24 @@ std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>> Grid::findClosestPair(
 {
 
     auto closestPair = bruteForceFindClosestPair(points);
-    auto minLRdistance = calcDistance(closestPair.first, closestPair.second);
+    // auto minLRdistance = calcDistance(closestPair.first, closestPair.second);
     
 
-    auto centerStrip = findCenterStrip(minDistFromCenterLine);
-    auto minCenterDistancePoints = findMinDistStrip(centerStrip);
-    auto minCenterStripDistance = calcDistance(minCenterDistancePoints.first, minCenterDistancePoints.second);
+    // auto centerStrip = findCenterStrip(minDistFromCenterLine);
+    // auto minCenterDistancePoints = findMinDistStrip(centerStrip);
+    // auto minCenterStripDistance = calcDistance(minCenterDistancePoints.first, minCenterDistancePoints.second);
 
-    std::cout << "min left right distance:\t" << minLRdistance << std::endl;
-    std::cout << "center strip distance:  \t" << minCenterStripDistance << std::endl;
+    // std::cout << "min left right distance:\t" << minLRdistance << std::endl;
+    // std::cout << "center strip distance:  \t" << minCenterStripDistance << std::endl;
 
-    if (minCenterStripDistance < minLRdistance)
-    {
-        std::cout << "Closest pair: (from centerline)" << std::endl;
-        std::cout << "x: " << minCenterDistancePoints.first->position.first << "\ty: " << minCenterDistancePoints.first->position.second << std::endl;
-        std::cout << "x: " << minCenterDistancePoints.second->position.first << "\ty: " << minCenterDistancePoints.second->position.second << std::endl;
-        std::cout << "Min distance:\t" << calcDistance(closestPair.first, closestPair.second) << std::endl;
-        return minCenterDistancePoints;
-    }
+    // if (minCenterStripDistance < minLRdistance)
+    // {
+    //     std::cout << "Closest pair: (from centerline)" << std::endl;
+    //     std::cout << "x: " << minCenterDistancePoints.first->position.first << "\ty: " << minCenterDistancePoints.first->position.second << std::endl;
+    //     std::cout << "x: " << minCenterDistancePoints.second->position.first << "\ty: " << minCenterDistancePoints.second->position.second << std::endl;
+    //     std::cout << "Min distance:\t" << calcDistance(closestPair.first, closestPair.second) << std::endl;
+    //     return minCenterDistancePoints;
+    // }
     std::cout << "Closest pair: " << std::endl;
     std::cout << "x: " << closestPair.first->position.first << "\ty: " << closestPair.first->position.second << std::endl;
     std::cout << "x: " << closestPair.second->position.first << "\ty: " << closestPair.second->position.second << std::endl;
@@ -74,8 +74,6 @@ std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>> Grid::bruteForceFindCl
                 }
             }
         }
-        // std::cout << p1->position.first << "\t" << p1->position.second << std::endl;
-        // std::cout << p2->position.first << "\t" << p2->position.second << std::endl;
         return std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>>(p1, p2);
     }
 
@@ -86,41 +84,31 @@ std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>> Grid::bruteForceFindCl
 
         left = bruteForceFindClosestPair(leftSide);
         right = bruteForceFindClosestPair(rightSide);
-        // auto timeBegin = Clock::now();
-        // auto timeEnd = Clock::now();
-        // auto divAndConquerTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
-
-        // std::cout << divAndConquerTime << std::endl;
 
     auto leftSideMinDistance = calcDistance(left.first, left.second);
     auto rightSideMinDistance = calcDistance(right.first, right.second);
 
     minDistFromCenterLine = std::min(leftSideMinDistance, rightSideMinDistance);
 
+    auto strip = std::vector<std::shared_ptr<Point>>();
+    auto midPoint = coords[(coords.size() / 2)];
+    for (auto point: coords) {
+        if(abs(point->position.first - midPoint->position.first) < minDistFromCenterLine) {
+            strip.push_back(point);
+        }
+    }
     // auto centerStrip = findCenterStrip(minDistFromCenterLine);
-    // auto minCenterDistancePoints = findMinDistStrip(centerStrip);
-    // auto minCenterStripDistance = calcDistance(minCenterDistancePoints.first, minCenterDistancePoints.second);
-    // // auto minCenterPointDist = calcDistance(centerStrip);
 
-    // if(minCenterStripDistance < minDistFromCenterLine) {
-    //     // std::cout << "from center line" << std::endl;
-    //     // std::cout << "Distance:\t" << calcDistance(minCenterDistancePoints.first, minCenterDistancePoints.second) << std::endl;
-    //     return minCenterDistancePoints;
-    // } else if
-    if (leftSideMinDistance < rightSideMinDistance)
-    {
-        // std::cout << "\nClosest Pairs..." << std::endl;
-        // std::cout << "\tPoint 1: \n\t\tx: " << left.first->position.first << "\ty: " << left.first->position.second << std::endl;
-        // std::cout << "\tPoint 2: \n\t\tx: " << left.second->position.second << "\ty: " << left.second->position.second << std::endl;
-        // std::cout << "Distance:\t" << calcDistance(left.first, left.second) << std::endl;
+    auto closestCenterPair = findMinDistStrip(strip);
+    auto centerPairDist = calcDistance(closestCenterPair.first, closestCenterPair.second);
+
+    if(centerPairDist < leftSideMinDistance && centerPairDist < rightSideMinDistance) {
+        return closestCenterPair;
+    }
+    else if (leftSideMinDistance < rightSideMinDistance) {
         return left;
     }
-    else
-    {
-        // std::cout << "\nClosest Pairs..." << std::endl;
-        // std::cout << "\tPoint 1: \n\t\tx: " << right.first->position.first << "\ty: " << right.first->position.second << std::endl;
-        // std::cout << "\tPoint 2: \n\t\tx: " << right.second->position.second << "\ty: " << right.second->position.second << std::endl;
-        // std::cout << "Distance:\t" << calcDistance(right.first, right.second) << std::endl;
+    else {
         return right;
     }
 

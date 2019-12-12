@@ -2,6 +2,7 @@
 #include "Grid.hpp"
 #include <iostream>
 #include <memory>
+#include <algorithm>
 #include <random>
 #include <chrono>
 using Clock=std::chrono::high_resolution_clock;
@@ -36,9 +37,9 @@ std::vector<std::shared_ptr<Point>> generateRandomPoints(int min, int max, int s
 
 int main() {
 
-    int max = 150;
+    int max = 1000;
     int min = -max;
-    int size = 1000;
+    int size = 20000;
 
     std::cout << "creating points...\n" << std::endl;
     auto randPoints = generateRandomPoints(min, max, size);
@@ -66,11 +67,12 @@ int main() {
     auto y = gridBruteForce->slowFindClosestPair();
     timeEnd = Clock::now();
 
-    auto bruteForceTime = std::chrono::duration_cast<std::chrono::seconds>(timeEnd - timeBegin).count();
+    auto bruteForceTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
 
 
-    std::cout << "Brute Force Time:\n" << bruteForceTime << " seconds...\n" << std::endl;
+    std::cout << "Brute Force Time:\n" << bruteForceTime << " milliseconds...\n" << std::endl;
     // std::cout << "x: "<< a->position.first << std::endl;
     // std::cout << "y: "<< a->position.second << std:: endl;
+    return 0;
 }
 

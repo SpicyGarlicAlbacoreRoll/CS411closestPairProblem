@@ -14,7 +14,6 @@ class Grid {
         Grid(std::vector<std::shared_ptr<Point>> & points);
 
     std::vector<std::shared_ptr<Point>> points;
-    size_t gridSize;
     std::pair<std::shared_ptr<Point>,std::shared_ptr<Point>> findClosestPair();
     std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>> slowFindClosestPair();
 
