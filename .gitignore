@@ -1,9 +1,10 @@
 a.out
 .vscode
 .vs
-build/*
+build/
+out/
 
-
+CMakeSettings.json
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
