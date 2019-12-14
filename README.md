@@ -3,6 +3,7 @@
 Two solutions to the closest pair problem using divide and conquer &  brute force algorithms.
 
 The divide and conquer runs in O(nlog^2(n)) time
+
 The brute force method runs in O(n^2) time
 
 Data is given to algorithms pre-sorted
@@ -18,4 +19,5 @@ from the project's root directory,
     cmake --build .
 
 On Linux output is to build/closestPair
+
 Windows will be to build/Debug/closestPair.exe
