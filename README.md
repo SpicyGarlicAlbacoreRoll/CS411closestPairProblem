@@ -1,9 +1,14 @@
 # CS411closestPairProblem
 
-WIP solutions to the closest pair problem using brute force and divide and conquer algorithms.
+Two solutions to the closest pair problem using divide and conquer &  brute force algorithms.
+
+The divide and conquer runs in O(nlog^2(n)) time
+The brute force method runs in O(n^2) time
+
+Data is given to algorithms pre-sorted
 
 
-BUILD INSTRUCTIONS (Only tested on GNU compiler, MSVC fails on starting div and conquer solution)
+BUILD INSTRUCTIONS (Tested on GNU, CLANG, and MSVC)
 
 from the project's root directory,
 
@@ -11,3 +16,6 @@ from the project's root directory,
     cd build
     cmake ../
     cmake --build .
+
+On Linux output is to build/closestPair
+Windows will be to build/Debug/closestPair.exe
