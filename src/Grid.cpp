@@ -70,13 +70,28 @@ pair<shared_ptr<Point>, shared_ptr<Point>> Grid::findClosestPairRecurs(vector<sh
         }
     }
 
+    // auto closestCenterPair = pair<shared_ptr<Point>, shared_ptr<Point>>();
+    // auto centerPairDist = 0;
+
+    //If our strip is only a single point, return either the left or right side
+    if (strip.size() < 2)
+    {
+        if (leftSideMinDistance < rightSideMinDistance)
+        {
+            return left;
+        }
+        else
+        {
+            return right;
+        }
+    }
+    
     // Brute force find closest pair along center strip
     auto closestCenterPair = findMinDistStrip(strip);
 
     // The distance between the closest pair of points
     auto centerPairDist = calcDistance(closestCenterPair.first, closestCenterPair.second);
-
-    // if the closest points we found in the center strip are closer 
+    // if the closest points we found in the center strip are closer
     // than the ones we found on either side recursively, we return that pair.
     // Otherwise we return the shortest of the left or the right
     if (centerPairDist < leftSideMinDistance && centerPairDist < rightSideMinDistance)
@@ -150,10 +165,10 @@ double Grid::calcDistance(shared_ptr<Point> a, shared_ptr<Point> b)
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
-
 // brute force function for finding the closest pair of points
-pair<shared_ptr<Point>, shared_ptr<Point>> Grid::bruteForce(vector<shared_ptr<Point>> & coordinates) {
-    
+pair<shared_ptr<Point>, shared_ptr<Point>> Grid::bruteForce(vector<shared_ptr<Point>> &coordinates)
+{
+
     auto p1 = shared_ptr<Point>();
     auto p2 = shared_ptr<Point>();
     pair<shared_ptr<Point>, shared_ptr<Point>> left;
@@ -180,26 +195,6 @@ pair<shared_ptr<Point>, shared_ptr<Point>> Grid::bruteForce(vector<shared_ptr<Po
 // The brute force solution to finding the closests pair
 pair<shared_ptr<Point>, shared_ptr<Point>> Grid::slowFindClosestPair()
 {
-    // auto p1 = shared_ptr<Point>();
-    // auto p2 = shared_ptr<Point>();
-    // pair<shared_ptr<Point>, shared_ptr<Point>> left;
-    // pair<shared_ptr<Point>, shared_ptr<Point>> right;
-
-    // auto min = std::numeric_limits<double>::max();
-
-    // for (auto x = points.begin(); x != points.end(); x++)
-    // {
-    //     for (auto y = x + 1; y != points.end(); y++)
-    //     {
-    //         if (calcDistance(*x, *y) < min)
-    //         {
-    //             min = calcDistance(*x, *y);
-    //             p1 = *x;
-    //             p2 = *y;
-    //         }
-    //     }
-    // }
-
     auto closestPair = bruteForce(points);
 
     std::cout << "Closest pair: " << std::endl;

@@ -39,7 +39,7 @@ int main() {
 
     int max = 1000;
     int min = -max;
-    int size = 10;
+    int size = 5;
 
     std::cout << "creating points...\n" << std::endl;
     auto randPoints = generateRandomPoints(min, max, size);
