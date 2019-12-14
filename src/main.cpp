@@ -39,7 +39,7 @@ int main() {
 
     int max = 1000;
     int min = -max;
-    int size = 20000;
+    int size = 10;
 
     std::cout << "creating points...\n" << std::endl;
     auto randPoints = generateRandomPoints(min, max, size);
@@ -52,25 +52,29 @@ int main() {
 
     std::cout << "With divide and conquer solution" << std::endl;
     auto timeBegin = Clock::now();
-    auto z = grid->findClosestPair();
+    auto closestPair = grid->findClosestPair();
     auto timeEnd = Clock::now();
 
-    auto divAndConquerTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
+    std::cout << "Closest pair: " << std::endl;
+    std::cout << "x: " << closestPair.first->position.first << "\ty: " << closestPair.first->position.second << std::endl;
+    std::cout << "x: " << closestPair.second->position.first << "\ty: " << closestPair.second->position.second << std::endl;
+    std::cout << "Distance apart:\t" << grid->calcDistance(closestPair.first, closestPair.second) << std::endl;
+    auto divAndConquerTime = std::chrono::duration_cast<std::chrono::seconds>(timeEnd - timeBegin).count();
 
-    std::cout << "Divide and Conquer Time:\n" << divAndConquerTime << " milliseconds\n" << std::endl;
+    std::cout << "Divide and Conquer Time:\n" << divAndConquerTime << " seconds\n" << std::endl;
 
-    auto gridBruteForce = std::make_unique<Grid>(randPoints);
+    // auto gridBruteForce = std::make_unique<Grid>(randPoints);
 
-    std::cout << "Finding the closest pair out of " << size << " points..." << std::endl;
-    std::cout << "With brute force (for reference)" << std::endl;
-    timeBegin = Clock::now();
-    auto y = gridBruteForce->slowFindClosestPair();
-    timeEnd = Clock::now();
+    // std::cout << "Finding the closest pair out of " << size << " points..." << std::endl;
+    // std::cout << "With brute force (for reference)" << std::endl;
+    // timeBegin = Clock::now();
+    // auto y = gridBruteForce->slowFindClosestPair();
+    // timeEnd = Clock::now();
 
-    auto bruteForceTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
+    // auto bruteForceTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeBegin).count();
 
 
-    std::cout << "Brute Force Time:\n" << bruteForceTime << " milliseconds...\n" << std::endl;
+    // std::cout << "Brute Force Time:\n" << bruteForceTime << " milliseconds...\n" << std::endl;
     // std::cout << "x: "<< a->position.first << std::endl;
     // std::cout << "y: "<< a->position.second << std:: endl;
     return 0;
